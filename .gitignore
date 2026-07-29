@@ -1,0 +1,10 @@
+node_modules/
+# .env
+uploads/
+order-processing.db
+
+dist/
+.angular/
+coverage/
+
+*.log

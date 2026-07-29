@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="header">
+        <h1>Order Processing System</h1>
+    </div>
+
+    <div class="nav-buttons" style="margin-bottom: 10px;">
+        <button class="inventory-btn" (click)="goToInventory()"> Inventory </button>
+    </div>
+
+    <div class="upload-section">
+        <div class="upload-box">
+            <label>Upload Inventory CSV</label>
+            <input
+                type="file"
+                accept=".csv"
+                (change)="uploadInventory($event)"
+            >
+        </div>
+
+        <div class="upload-box">
+            <label>Upload Orders CSV</label>
+            <input
+                type="file"
+                accept=".csv"
+                (change)="uploadOrders($event)"
+            >
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        Loading Orders...
+    </div>
+
+    <table *ngIf="!loading">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>SKU</th>
+                <th>Qty</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let order of orders">
+                <td>{{order.order_id}}</td>
+                <td>{{order.sku}}</td>
+                <td>{{order.qty}}</td>
+                <td>{{order.amount}}</td>
+                <td>
+                    <span
+                        class="badge"
+                        [ngClass]="{
+                        'placed': order.status === 'PLACED',
+                        'cancelled': order.status === 'CANCELLED',
+                        'progress': order.status === 'IN_PROGRESS',
+                        'attention': order.status === 'NEEDS_ATTENTION',
+                        'shipped': order.status === 'SHIPPED'
+                    }">
+                        {{order.status}}
+                    </span>
+                </td>
+                <td>
+                    <button
+                        class="view"
+                        (click)="openDetails(order.order_id)">
+                        View
+                    </button>
+
+                    <button
+                        *ngIf="order.status==='PLACED'"
+                        class="ship"
+                        (click)="markShipped(order.order_id)">
+                        Ship
+                    </button>
+
+                    <button
+                        *ngIf="order.status==='NEEDS_ATTENTION'"
+                        class="retry"
+                        (click)="retry(order.order_id)">
+                        Retry
+                    </button>
+
+                </td>
+            </tr>
+
+            <tr *ngIf="orders.length===0">
+                <td colspan="6">
+                    No Orders Found
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
