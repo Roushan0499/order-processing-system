@@ -1,18 +1,20 @@
 # Order Processing System
 
-A simple Order Processing System built using **Angular**, **Node.js**, **Express.js**, and **SQLite** to demonstrate the Saga pattern for handling distributed transactions.
+A simple Order Processing System built using **Angular**, **Node.js**, **Express.js**, and **MySQL** to demonstrate the Saga pattern for handling distributed transactions.
 
 ## Features
 
-* Upload inventory from CSV
-* Upload bulk orders from CSV
-* Process orders through multiple services
-* Automatic rollback (compensation) on failure
-* Retry mechanism for failed operations
-* View order details and processing logs
-* Mark orders as shipped
+* Upload Inventory from CSV
+* Upload Orders from CSV
+* Process bulk orders
+* Inventory reservation
+* Payment processing
+* Shipment creation
+* Automatic rollback (Compensation)
+* Retry mechanism
+* Order tracking
+* Order processing logs
 * Notification service for shipped orders
-* Inventory management
 
 ## Tech Stack
 
@@ -20,6 +22,7 @@ A simple Order Processing System built using **Angular**, **Node.js**, **Express
 
 * Angular 20
 * TypeScript
+* Angular Material
 * HTML
 * CSS
 
@@ -30,15 +33,47 @@ A simple Order Processing System built using **Angular**, **Node.js**, **Express
 
 ### Database
 
-* SQLite
+* MySQL 8
 
-## Getting Started
+### Packages
+
+* mysql2
+* multer
+* csv-parser
+* cors
+* dotenv
+
+## Database Setup
+
+Create the database in MySQL:
+
+```sql
+CREATE DATABASE order_processing_system;
+```
+
+Update your `.env` file:
+
+```env
+PORT=5000
+
+DB_HOST=localhost
+DB_PORT=3301
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=order_processing_system
+```
+
+> Replace `DB_PORT` and `DB_PASSWORD` with your local MySQL configuration.
+
+## Installation
 
 ### Backend
 
 ```bash
 cd backend
+
 npm install
+
 npm run dev
 ```
 
@@ -46,24 +81,49 @@ npm run dev
 
 ```bash
 cd frontend
+
 npm install
+
 ng serve
 ```
 
-Open the application at:
+## Application URLs
+
+Frontend
 
 ```text
 http://localhost:4200
 ```
 
-## How to Use
+Backend
 
-1. Upload the inventory CSV.
-2. Upload the orders CSV.
-3. Monitor order processing on the dashboard.
-4. Open an order to view its details.
-5. Mark placed orders as shipped.
+```text
+http://localhost:5000
+```
+
+## How to Test
+
+1. Start the MySQL server.
+2. Run the backend.
+3. Run the Angular application.
+4. Upload the Inventory CSV.
+5. Upload the Orders CSV.
+6. Monitor the order processing workflow.
+7. Mark an order as shipped to trigger the notification service.
+
+
+## Future Improvements
+
+* User authentication
+* Dashboard analytics
+* Email notifications
+* Docker support
+* Unit and integration tests
+* Pagination and filtering
+* Swagger API documentation
 
 ## Author
 
 **Roushan Kumar**
+
+Full Stack Developer
